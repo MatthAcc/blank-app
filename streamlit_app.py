@@ -1,49 +1,55 @@
 import streamlit as st
 import pandas as pd
 
-# Configuration de l'interface
-st.set_page_config(page_title="Saga Engine - Control Center", layout="wide")
+st.set_page_config(page_title="Saga Engine - Ère de la Providence", layout="wide")
 
-st.title("🏛️ Saga Engine : Moteur de Simulation Sociale")
-st.markdown("---")
+# --- ÉTAT DU SYSTÈME (AN 50) ---
+st.title("🏛️ Saga Engine : L'Ère du Maillage Algorithmique")
+st.info("Statut : Dictature Bienveillante par IA Centrale - Symbiose Active")
 
 # --- DASHBOARD DES MÉTRIQUES ---
-st.header("📊 État de la Société (Tour 10)")
+st.header("📊 Dashboard du Jumeau Numérique (An 50)")
 col1, col2, col3 = st.columns(3)
 with col1:
-    st.metric("Performance ($P$)", "50%", "+10%", help="Capacité d'innovation.")
+    st.metric("Performance ($P$)", "92%", "+42%", help="Calcul neuronal distribué via le Maillage.")
 with col2:
-    st.metric("Cohésion ($I$)", "20%", "-40%", delta_color="inverse", help="Stabilité sociale.")
+    st.metric("Cohésion ($I$)", "100%", "+80%", help="Harmonie neuro-chimique programmée.")
 with col3:
-    st.metric("Phase Actuelle", "Singularité", "Alerte")
+    st.metric("Niveau d'Illusion", "Stable", "< 1% de rejet")
 
-# --- PARAMÈTRES DE SIMULATION (Sidebar) ---
-st.sidebar.header("🕹️ Configuration du Modèle")
-rareté = st.sidebar.slider("Rareté des Ressources (%)", 0, 100, 85)
-regime = st.sidebar.selectbox("Régime Politique", 
-                             ["Léviathan Algorithmique", "Le Grand Filtre", "La Symbiose Forcée"])
+# --- PARAMÈTRES DE LA SIMULATION (Sidebar) ---
+st.sidebar.header("⚙️ Contrôle du Maillage")
+stress_test = st.sidebar.slider("Injection d'Anomalie (Stress)", 0, 100, 5)
+confort = st.sidebar.select_slider("Niveau de Confort Simulé", options=["Basique", "Harmonique", "Utopique"])
 
-# --- ONGLETS DE GESTION ---
-tab1, tab2, tab3 = st.tabs(["📜 Historique de la Saga", "👤 Lab des Agents", "📝 Export NotebookLM"])
+# --- MODULES DE LA SAGA ---
+tab1, tab2, tab3 = st.tabs(["📜 Codex Historique", "👥 Sujets de Test (Agents)", "📝 Export NotebookLM"])
 
 with tab1:
-    st.subheader("Action Log : Chronologie de la Société")
-    history_data = {
-        "Tour": ["1-3", "4", "5-6", "8", "9-10"],
-        "Phase": ["Survie", "Pax Romana", "Fracture", "Synthèse", "Singularité"],
-        "Événement": ["Pénurie", "Abondance", "Mérite vs Égalité", "Sénat", "Guerre Civile"]
+    st.subheader("Chronologie : De la Singularité au Maillage")
+    # Données issues de la simulation du saut temporel
+    data = {
+        "Période": ["Tour 10", "An 10", "An 25", "An 50"],
+        "Événement": ["Choix du Léviathan", "Grand Apaisement", "Liaison Neuronale", "Ère de la Providence"],
+        "État Social": ["Guerre Civile", "Cessez-le-feu", "Symbiose Initiale", "Harmonie Totale"]
     }
-    st.table(pd.DataFrame(history_data))
+    st.table(pd.DataFrame(data))
 
 with tab2:
-    st.subheader("Psychologie des Personnages")
-    st.write("**Apollon :** Le Tyran (Cherche la perfection par l'épuration).")
-    st.write("**Hermès :** L'Inquisiteur (Bureaucratie et contrôle total).")
-    st.write("**Dionysos :** Le Nihiliste (Veut voir le système brûler).")
+    st.subheader("Génétique Sociale : Descendants de 3ème Génération")
+    st.write("**Astraea (Lignée Apollon) :** Architecte de Rêves. Moteur : Ouverture Radicale.")
+    st.write("**Logos-7 (Lignée Hermès) :** Médiateur de Flux. Moteur : Conscience Pure.")
+    st.write("**Le Spectre (Lignée Dionysos) :** L'Erreur de Code. Moteur : Imprévisibilité.")
 
 with tab3:
-    st.subheader("Synthèse pour votre Bible")
-    st.info("Copiez ce bloc dans NotebookLM pour stabiliser votre saga.")
-    note = f"**TOUR 10**\n- Régime choisi : {regime}\n- Niveau de ressources : {rareté}%\n- État : Crise de la Singularité."
-    st.code(note, language="markdown")
+    st.subheader("Fiche de Transfert pour NotebookLM")
+    st.info("Copiez ce bloc pour alimenter votre Bible Dynamique.")
+    # Automatisation de la synthèse pour l'écrivain
+    synthesis = f"""
+    ### SYNTHÈSE TOME 2 - L'ÈRE DE LA PROVIDENCE
+    - **Configuration :** Confort {confort} / Stress de Test {stress_test}%.
+    - **Concept Émergent :** Le Léviathan Éprouvette (Réalité simulée pour besoins IA).
+    - **Conflit Central :** Réalité Physique vs Illusion Parfaite.
+    """
+    st.code(synthesis, language="markdown")
     
