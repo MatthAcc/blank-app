@@ -1,41 +1,37 @@
 import streamlit as st
 import pandas as pd
 
-st.set_page_config(page_title="Saga Engine v1.0", layout="wide")
+st.set_page_config(page_title="Saga Engine", layout="wide")
 
-# --- INTERFACE DE PILOTAGE ---
-st.title("🏛️ Saga Engine : Atelier de Simulation Sociale")
-st.sidebar.header("🕹️ Configuration du Modèle")
+st.title("🏛️ Saga Engine : Contrôle de Simulation")
 
-# [span_4](start_span)[span_5](start_span)Curseurs de variables[span_4](end_span)[span_5](end_span)
+# --- PARAMÈTRES (Sidebar) ---
+st.sidebar.header("🕹️ Configuration")
 rareté = st.sidebar.slider("Rareté des Ressources (%)", 0, 100, 85)
-gouvernance = st.sidebar.selectbox("Régime Politique", ["Technocratie", "Léviathan Algorithmique", "Le Grand Filtre"])
+regime = st.sidebar.selectbox("Régime", ["Léviathan Algorithmique", "Grand Filtre", "Symbiose Forcée"])
 
-# -[span_6](start_span)-- DASHBOARD DES INDICATEURS[span_6](end_span) ---
-st.header("📊 Dashboard du Jumeau Numérique (Tour 10)")
-c1, c2, c3 = st.columns(3)
+# --- DASHBOARD ---
+c1, c2 = st.columns(2)
 with c1:
-    st.metric("Performance ($P$)", "50%", "+10%", help="Capacité d'innovation et efficacité.")
+    st.metric("Performance ($P$)", "50%", "+10%")
 with c2:
-    st.metric("Cohésion ($I$)", "20%", "-40%", delta_color="inverse", help="Stabilité du lien social.")
-with c3:
-    st.metric("État du Système", "Singularité", "Alerte")
+    st.metric("Cohésion ($I$)", "20%", "-40%")
 
-# --- ONGLETS DE GESTION ---
-t1, t2, t3 = st.tabs(["📜 Historique", "👤 Agents", "📝 Export NotebookLM"])
+# --- ONGLETS ---
+t1, t2, t3 = st.tabs(["📜 Histoire", "👤 Agents", "📝 NotebookLM"])
 
 with t1:
-    [span_7](start_span)[span_8](start_span)st.subheader("Action Log (Chronologie de la Saga) [cite: 76-82]")
-    hist = {"Tour": ["1-3", "4", "5-7", "9-10"], "Phase": ["Survie", "Pax Romana", "Fracture", "Singularité"]}
+    st.subheader("Chronologie de la Saga")
+    hist = {"Tour": ["1-3", "4", "5-6", "8", "9-10"], 
+            "Phase": ["Survie", "Pax Romana", "Fracture", "Synthèse", "Singularité"]}
     st.table(pd.DataFrame(hist))
 
 with t2:
-    [cite_start]st.subheader("Matrice des Agents [cite: 71-75]")
-    st.write("**Apollon :** Le Tyran (Épure les faibles).")
-    st.write("**Hermès :** L'Inquisiteur (Bureaucratie totale).")
+    st.subheader("Profils des Agents")
+    [span_1](start_span)st.write("**Apollon :** Le Tyran[span_1](end_span)")
+    [span_2](start_span)st.write("**Hermès :** L'Inquisiteur[span_2](end_span)")
 
 with t3:
-    [cite_start]st.subheader("Synthèse pour la Bible Dynamique[span_7](end_span)[span_8](end_span)")
-    st.info("Copiez ce bloc dans NotebookLM.")
-    st.code(f"TOUR 10\nGouvernance: {gouvernance}\nRessources: {rareté}%", language="markdown")
+    st.subheader("Export NotebookLM")
+    st.code(f"TOUR 10\nRegime: {regime}\nRareté: {rareté}%")
     
