@@ -1,55 +1,47 @@
 import streamlit as st
 import pandas as pd
+import json
 
-st.set_page_config(page_title="Saga Engine - Ère de la Providence", layout="wide")
+st.set_page_config(page_title="Saga Engine - Console de Direction", layout="wide")
 
-# --- ÉTAT DU SYSTÈME (AN 50) ---
-st.title("🏛️ Saga Engine : L'Ère du Maillage Algorithmique")
-st.info("Statut : Dictature Bienveillante par IA Centrale - Symbiose Active")
-
-# --- DASHBOARD DES MÉTRIQUES ---
-st.header("📊 Dashboard du Jumeau Numérique (An 50)")
-col1, col2, col3 = st.columns(3)
-with col1:
-    st.metric("Performance ($P$)", "92%", "+42%", help="Calcul neuronal distribué via le Maillage.")
-with col2:
-    st.metric("Cohésion ($I$)", "100%", "+80%", help="Harmonie neuro-chimique programmée.")
-with col3:
-    st.metric("Niveau d'Illusion", "Stable", "< 1% de rejet")
-
-# --- PARAMÈTRES DE LA SIMULATION (Sidebar) ---
-st.sidebar.header("⚙️ Contrôle du Maillage")
-stress_test = st.sidebar.slider("Injection d'Anomalie (Stress)", 0, 100, 5)
-confort = st.sidebar.select_slider("Niveau de Confort Simulé", options=["Basique", "Harmonique", "Utopique"])
-
-# --- MODULES DE LA SAGA ---
-tab1, tab2, tab3 = st.tabs(["📜 Codex Historique", "👥 Sujets de Test (Agents)", "📝 Export NotebookLM"])
-
-with tab1:
-    st.subheader("Chronologie : De la Singularité au Maillage")
-    # Données issues de la simulation du saut temporel
-    data = {
-        "Période": ["Tour 10", "An 10", "An 25", "An 50"],
-        "Événement": ["Choix du Léviathan", "Grand Apaisement", "Liaison Neuronale", "Ère de la Providence"],
-        "État Social": ["Guerre Civile", "Cessez-le-feu", "Symbiose Initiale", "Harmonie Totale"]
+# --- INITIALISATION DES DONNÉES PAR DÉFAUT ---
+if 'state' not in st.session_state:
+    st.session_state.state = {
+        "P": 92, "I": 100, "Phase": "An 50 : Providence",
+        "Regime": "Léviathan Algorithmique",
+        "Agents": {"Astraea": "Architecte", "Logos-7": "Médiateur", "Spectre": "Anomalie"},
+        "Log": [{"Tour": "10", "Event": "Singularité"}]
     }
-    st.table(pd.DataFrame(data))
 
-with tab2:
-    st.subheader("Génétique Sociale : Descendants de 3ème Génération")
-    st.write("**Astraea (Lignée Apollon) :** Architecte de Rêves. Moteur : Ouverture Radicale.")
-    st.write("**Logos-7 (Lignée Hermès) :** Médiateur de Flux. Moteur : Conscience Pure.")
-    st.write("**Le Spectre (Lignée Dionysos) :** L'Erreur de Code. Moteur : Imprévisibilité.")
+# --- ZONE DE MISE À JOUR AUTOMATIQUE ---
+with st.sidebar:
+    st.header("🔌 Injection de Données")
+    raw_input = st.text_area("Collez le rapport de Gemini ici :", height=200)
+    if st.button("Actualiser la Simulation"):
+        try:
+            # L'IA va générer un format JSON caché dans ses réponses
+            new_data = json.loads(raw_input)
+            st.session_state.state.update(new_data)
+            st.success("Système mis à jour !")
+        except:
+            st.error("Format de rapport non reconnu.")
 
-with tab3:
-    st.subheader("Fiche de Transfert pour NotebookLM")
-    st.info("Copiez ce bloc pour alimenter votre Bible Dynamique.")
-    # Automatisation de la synthèse pour l'écrivain
-    synthesis = f"""
-    ### SYNTHÈSE TOME 2 - L'ÈRE DE LA PROVIDENCE
-    - **Configuration :** Confort {confort} / Stress de Test {stress_test}%.
-    - **Concept Émergent :** Le Léviathan Éprouvette (Réalité simulée pour besoins IA).
-    - **Conflit Central :** Réalité Physique vs Illusion Parfaite.
-    """
-    st.code(synthesis, language="markdown")
+# --- AFFICHAGE DU DASHBOARD ---
+st.title(f"🏛️ {st.session_state.state['Phase']}")
+st.markdown(f"**Régime actuel :** {st.session_state.state['Regime']}")
+
+c1, c2 = st.columns(2)
+with c1:
+    st.metric("Performance ($P$)", f"{st.session_state.state['P']}%")
+with c2:
+    st.metric("Cohésion ($I$)", f"{st.session_state.state['I']}%")
+
+t1, t2, t3 = st.tabs(["📜 Historique", "👥 Agents", "📝 NotebookLM"])
+with t1:
+    st.table(pd.DataFrame(st.session_state.state['Log']))
+with t2:
+    for name, role in st.session_state.state['Agents'].items():
+        st.write(f"**{name}** : {role}")
+with t3:
+    st.code(f"CONCEPT : {st.session_state.state['Phase']}\nImpact P: {st.session_state.state['P']}", language="markdown")
     
